@@ -4,6 +4,12 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log('Hello Here');
+  req.requestTime = new Date().getTime();
+  next();
+});
+
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
@@ -11,6 +17,7 @@ const tours = JSON.parse(
 app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({
     status: 'ok',
+    requestAt: req.requestTime,
     data: tours,
   });
 });
