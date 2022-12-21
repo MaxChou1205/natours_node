@@ -1,61 +1,29 @@
-const fs = require('fs');
 const express = require('express');
 const morgan = require('morgan');
 
+const tourRouter = require('./routes/tourRoutes');
+const userRouter = require('./routes/userRoutes');
+
 const app = express();
 
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 app.use(express.json());
+app.use(express.static(`${__dirname}/public`));
+
 app.use((req, res, next) => {
-  console.log('Hello Here');
-  req.requestTime = new Date().getTime();
+  console.log('Hello from the middleware 👋');
   next();
 });
 
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
-);
-
-app.get('/api/v1/tours', (req, res) => {
-  res.status(200).json({
-    status: 'ok',
-    requestAt: req.requestTime,
-    data: tours,
-  });
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
 });
 
-app.get('/api/v1/tours/:id', (req, res) => {
-  const id = +req.params.id;
-  const tour = tours.find((item) => item.id === id);
-  if (!tour)
-    return res.status(404).json({
-      status: 'not found',
-      message: 'Invalid ID',
-    });
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
 
-  res.status(200).json({
-    status: 'ok',
-    data: tour,
-  });
-});
-
-app.post('/api/v1/tours', (req, res) => {
-  const newId = tours[tours.length - 1].id + 1;
-  const newTour = { id: newId, ...req.body };
-  tours.push(newTour);
-
-  fs.writeFile(
-    `${__dirname}/dev-data/data/tours-simple.json`,
-    JSON.stringify(tours),
-    (error) => {
-      res.status(200).json({
-        status: 'ok',
-        data: newTour,
-      });
-    }
-  );
-});
-
-app.listen(3000, () => {
-  console.log('running on port 3000...');
-});
+module.exports = app;
