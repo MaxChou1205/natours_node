@@ -6,13 +6,12 @@ const tourSchema = new mongoose.Schema({
     require: [true, 'a tour must have a name'],
     unique: true,
   },
-  price: Number,
-  rating: {
+  price: {
     type: Number,
     require: [true, 'a tour must have a price'],
   },
+  rating: Number,
 });
 const Tour = mongoose.model('Tour', tourSchema);
 
-
-module.exports = Tour
+module.exports = Tour;
