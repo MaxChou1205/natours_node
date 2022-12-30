@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "debug":"ndb server.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
     "express": "^4.18.2",
     "mongoose": "5",
     "morgan": "^1.10.0",
+    "ndb": "^1.1.5",
     "validator": "^13.7.0"
   },
   "devDependencies": {
