@@ -9,6 +9,10 @@ router.use(authController.protect);
 router
   .route('/')
   .get(reviewController.getAllReviews)
-  .post(authController.restrictTo('user','admin'), reviewController.createReview);
+  .post(
+    authController.restrictTo('user'),
+    reviewController.setTourUserIds,
+    reviewController.createReview
+  );
 
 module.exports = router;

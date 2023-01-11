@@ -36,12 +36,6 @@ exports.createUser = (req, res) => {
     message: 'This route is not yet defined!',
   });
 };
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!',
-  });
-};
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user POSTs password data
@@ -80,4 +74,5 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
