@@ -13,7 +13,13 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger_output.json'); // swagger JSON
+
 const app = express();
+
+// swagger
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Set security HTTP headers
 app.use(helmet());
