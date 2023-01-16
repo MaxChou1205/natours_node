@@ -13,6 +13,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const viewRouter = require('./routes/viewRoutes');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json'); // swagger JSON
@@ -70,23 +71,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/overview', (req, res) => {
-  res.status(200).render('overview', {
-    title: 'All tours',
-  });
-});
-app.use('/tour', (req, res) => {
-  res.status(200).render('tour', {
-    title: 'Tour',
-  });
-});
-app.use('/', (req, res) => {
-  res.status(200).render('base', {
-    tour: 'The Forest Hiker',
-    user: 'Jonas',
-  });
-});
-
+app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
