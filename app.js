@@ -70,9 +70,23 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', (req, res) => {
-  res.status(200).render('base');
+app.use('/overview', (req, res) => {
+  res.status(200).render('overview', {
+    title: 'All tours',
+  });
 });
+app.use('/tour', (req, res) => {
+  res.status(200).render('tour', {
+    title: 'Tour',
+  });
+});
+app.use('/', (req, res) => {
+  res.status(200).render('base', {
+    tour: 'The Forest Hiker',
+    user: 'Jonas',
+  });
+});
+
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
