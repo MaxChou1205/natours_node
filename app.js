@@ -23,9 +23,11 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-// Body parser, reading data from body into req.body
-app.use(express.json({ limit: '10kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Body parser, reading data from body into req.body
+// app.use(express.json({ limit: '10kb' }));
+// app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // swagger
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
