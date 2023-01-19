@@ -9,4 +9,10 @@ router.get('/tour/:slug', authController.isLoggedIn, authController.protect, vie
 router.get('/login', authController.isLoggedIn, viewController.login);
 router.get('/me', authController.protect, viewController.getAccount);
 
+router.post(
+  '/submit-user-data',
+  authController.protect,
+  viewController.updateUserData
+);
+
 module.exports = router;
