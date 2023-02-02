@@ -39,6 +39,10 @@ app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(
   helmet({
     contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginResourcePolicy: false,
+    frameguard: false
   })
 );
 // app.use(helmet());
