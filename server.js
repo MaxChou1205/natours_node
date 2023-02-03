@@ -19,7 +19,7 @@ mongoose
     useFindAndModify: true,
   })
   .then((con) => {
-    console.log(con.connections);
+    // console.log(con.connections);
   });
 
 const port = process.env.PORT || 3000;
