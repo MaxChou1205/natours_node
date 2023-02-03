@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -45,19 +46,6 @@ app.use(
     frameguard: false
   })
 );
-// app.use(helmet());
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     directives: {
-//       'default-src': ["'self'"],
-//       'connect-src': ["'self'", "'unsafe-inline'"],
-//       'img-src': ["'self'", 'data:'],
-//       'style-src-elem': ["'self'", 'data:'],
-//       'script-src': ["'unsafe-inline'", "'self'"],
-//       'object-src': ["'none'"],
-//     },
-//   })
-// );
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {
@@ -91,6 +79,8 @@ app.use(
     ],
   })
 );
+
+app.use(compression());
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
